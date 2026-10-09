@@ -1,0 +1,24 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Home } from './pages/Home';
+import { ProjectsPage } from './pages/ProjectsPage';
+import { ExperiencePage } from './pages/ExperiencePage';
+import { StackPage } from './pages/StackPage';
+import { useTheme } from './hooks/useTheme';
+
+function App() {
+  useTheme(); // Initialize theme globally
+  return (
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-zinc-200 dark:selection:bg-zinc-800">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/experience" element={<ExperiencePage />} />
+          <Route path="/stack" element={<StackPage />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+}
+
+export default App;

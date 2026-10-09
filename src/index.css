@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: 'Inter', 'system-ui', 'sans-serif';
+  --font-mono: 'JetBrains Mono', 'monospace';
+}
+
+@layer base {
+  body {
+    @apply bg-white text-zinc-900 dark:bg-[#0a0a0a] dark:text-[#f5f5f5] transition-colors duration-300;
+  }
+}
