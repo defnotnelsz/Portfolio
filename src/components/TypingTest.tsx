@@ -8,6 +8,10 @@ export const TypingTest: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isTestOpen, setIsTestOpen] = useState(false);
 
+  const focusInput = () => {
+    setTimeout(() => inputRef.current?.focus(), 50);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isTestOpen) return;
@@ -18,11 +22,12 @@ export const TypingTest: React.FC = () => {
       if (e.key === 'Tab') {
         e.preventDefault();
         resetTest();
-        inputRef.current?.focus();
+        focusInput();
       }
       if (e.key === 'Enter' && (isFinished || !isActive)) {
-         resetTest();
-         inputRef.current?.focus();
+        e.preventDefault();
+        resetTest();
+        focusInput();
       }
     };
 
@@ -32,7 +37,8 @@ export const TypingTest: React.FC = () => {
 
   useEffect(() => {
     if (isTestOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      const timer = setTimeout(() => inputRef.current?.focus(), 50);
+      return () => clearTimeout(timer);
     } else {
       resetTest();
     }
@@ -69,6 +75,9 @@ export const TypingTest: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Typing test modal"
             className="fixed inset-0 z-50 bg-white dark:bg-[#0a0a0a] flex flex-col pt-24 px-6 md:px-24"
           >
             <div className="max-w-4xl mx-auto w-full">
@@ -79,6 +88,7 @@ export const TypingTest: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setIsTestOpen(false)}
+                  aria-label="Close typing test"
                   className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 font-mono text-[11px] md:text-xs uppercase tracking-wider"
                 >
                   [ESC] Close
@@ -86,7 +96,12 @@ export const TypingTest: React.FC = () => {
               </div>
 
               {!isFinished ? (
-                <div className="relative mb-12" onClick={() => inputRef.current?.focus()}>
+                <div
+                  className="relative mb-12 cursor-text"
+                  onClick={() => inputRef.current?.focus()}
+                  role="region"
+                  aria-label="Typing test passage"
+                >
                   <div className="text-xl md:text-3xl font-mono leading-relaxed text-zinc-300 dark:text-zinc-700 select-none">
                     {passage.split('').map((char, index) => {
                       let colorClass = '';
@@ -111,6 +126,7 @@ export const TypingTest: React.FC = () => {
                     type="text"
                     value={input}
                     onChange={(e) => handleInput(e.target.value)}
+                    aria-label="Typing test input"
                     className="absolute inset-0 opacity-0 cursor-default"
                     autoComplete="off"
                     autoCorrect="off"
@@ -149,7 +165,7 @@ export const TypingTest: React.FC = () => {
 
                   <div className="flex gap-4">
                     <button
-                      onClick={() => { resetTest(); setTimeout(() => inputRef.current?.focus(), 100); }}
+                      onClick={() => { resetTest(); focusInput(); }}
                       className="bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 px-6 py-3 text-[13px] md:text-sm font-medium hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors"
                     >
                       Try Again

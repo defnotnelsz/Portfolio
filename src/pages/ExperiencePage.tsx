@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const currentYear = new Date().getFullYear();
+
 export const ExperiencePage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -108,7 +110,7 @@ export const ExperiencePage: React.FC = () => {
       </div>
 
       <footer className="mt-32 py-12 border-t border-zinc-200 dark:border-zinc-800/50 text-[11px] md:text-xs text-zinc-500 font-mono flex justify-between">
-        <span>&copy; {new Date().getFullYear()} Janelie Sayson Blanco.</span>
+        <span>&copy; {currentYear} Janelie Sayson Blanco.</span>
         <span>Professional Portfolio</span>
       </footer>
     </div>

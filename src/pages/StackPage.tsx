@@ -14,6 +14,8 @@ const sections = [
   { id: 'contact', label: 'Contact' },
 ];
 
+const currentYear = new Date().getFullYear();
+
 export const StackPage: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -78,7 +80,7 @@ export const StackPage: React.FC = () => {
         </div>
 
         <footer className="mt-32 py-12 border-t border-zinc-200 dark:border-zinc-800/50 text-[11px] md:text-xs text-zinc-500 font-mono flex justify-between max-w-4xl">
-          <span>&copy; {new Date().getFullYear()} Janelie Sayson Blanco.</span>
+          <span>&copy; {currentYear} Janelie Sayson Blanco.</span>
           <span>Professional Portfolio</span>
         </footer>
       </main>

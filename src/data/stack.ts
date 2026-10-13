@@ -6,11 +6,11 @@ export interface TechCategory {
 export const stack: TechCategory[] = [
   {
     category: 'Frontend',
-    items: ['React', 'TypeScript', 'JavaScript', 'Next.js', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Styled Components', 'Prettier', 'WebPack', 'ESLint', 'Vue.js'],
+    items: ['React', 'TypeScript', 'JavaScript', 'Next.js', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Styled Components', 'Prettier', 'Webpack', 'ESLint', 'Vue.js'],
   },
   {
     category: 'Backend',
-    items: ['Python', 'FastAPI', 'PostreSQL', 'Laravel', 'Node.js', 'Java', 'Express.js'],
+    items: ['Python', 'FastAPI', 'PostgreSQL', 'Laravel', 'Node.js', 'Java', 'Express.js'],
   },
   {
     category: 'DevOps & Cloud',

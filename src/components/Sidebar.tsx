@@ -17,12 +17,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, isMob
   const location = useLocation();
 
   const scrollTo = (id: string) => {
-    if (id === 'stack' && location.pathname !== '/stack') {
-      navigate('/stack');
-      setIsMobileMenuOpen(false);
-      return;
-    }
-    
     if (location.pathname !== '/') {
       navigate('/#' + id);
       setIsMobileMenuOpen(false);

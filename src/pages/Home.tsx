@@ -18,9 +18,12 @@ const sections = [
   { id: 'contact', label: 'Contact' },
 ];
 
+const SECTION_IDS = sections.map((s) => s.id);
+const currentYear = new Date().getFullYear();
+
 export const Home = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const activeSection = useActiveSection(sections.map(s => s.id));
+  const activeSection = useActiveSection(SECTION_IDS);
   const location = useLocation();
 
   useEffect(() => {
@@ -35,7 +38,7 @@ export const Home = () => {
     } else {
       window.scrollTo(0, 0);
     }
-  }, [location]);
+  }, [location.hash, location.pathname]);
 
   return (
     <>
@@ -55,7 +58,7 @@ export const Home = () => {
         <Contact />
         
         <footer className="py-12 border-t border-zinc-200 dark:border-zinc-800/50 text-[11px] md:text-xs text-zinc-500 font-mono flex justify-between">
-          <span>&copy; {new Date().getFullYear()} Janelie Sayson Blanco.</span>
+          <span>&copy; {currentYear} Janelie Sayson Blanco.</span>
           <span>Professional Portfolio</span>
         </footer>
       </main>
