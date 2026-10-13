@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Project } from '../data/projects';
 import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../hooks/useTheme';
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const { theme } = useTheme();
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const link = project.url || project.github;
-  
+
+  const rawSrc =
+    typeof project.image === 'object' && project.image !== null
+      ? theme === 'dark'
+        ? project.image.dark
+        : project.image.light
+      : project.image;
+
+  const imageSrc = rawSrc ? encodeURI(decodeURI(rawSrc)) : undefined;
+  const isImageBroken = Boolean(imageSrc && failedSrc === imageSrc);
+
   return (
     <motion.a
       href={link}
@@ -20,11 +33,26 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       transition={{ duration: 0.2 }}
     >
       <div className="border border-zinc-200 dark:border-zinc-800 p-1 flex flex-col h-full bg-white dark:bg-[#0a0a0a]">
-        <div className="aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 mb-4 overflow-hidden relative">
-           {/* Image placeholder */}
-           <div className="absolute inset-0 flex items-center justify-center text-zinc-400 dark:text-zinc-600 text-sm">
-             {project.name} Image
-           </div>
+        <div className="aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 mb-4 overflow-hidden relative flex items-center justify-center p-4">
+          {imageSrc && !isImageBroken ? (
+            <img
+              src={imageSrc}
+              alt={`${project.name} preview`}
+              className={
+                project.id === 'savi'
+                  ? 'max-h-[60%] max-w-[80%] object-contain'
+                  : 'max-h-full max-w-full object-contain'
+              }
+              onError={() => {
+                console.warn(`[ProjectCard] Failed to load image for ${project.name}: ${imageSrc}`);
+                setFailedSrc(imageSrc ?? null);
+              }}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-zinc-400 dark:text-zinc-600 text-sm">
+              {project.name} Image
+            </div>
+          )}
         </div>
         <div className="px-4 pb-4 flex flex-col flex-1">
           <div className="flex justify-between items-start mb-2">

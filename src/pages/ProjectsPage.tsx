@@ -3,8 +3,11 @@ import { projects } from '../data/projects';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../hooks/useTheme';
 
 export const ProjectsPage: React.FC = () => {
+  const { theme } = useTheme();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -26,22 +29,47 @@ export const ProjectsPage: React.FC = () => {
       </div>
 
       <div className="space-y-32 md:space-y-48">
-        {projects.map((project, i) => (
-          <motion.article 
-            key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
-            className="group"
-          >
-            <h2 className="text-lg md:text-xl font-semibold mb-8 md:mb-12">{project.name}</h2>
-            
-            <div className="aspect-[16/9] md:aspect-[21/9] bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 mb-8 md:mb-12 relative overflow-hidden flex items-center justify-center group-hover:border-zinc-300 dark:group-hover:border-zinc-700 transition-colors">
-              <span className="text-zinc-400 dark:text-zinc-600 font-mono text-xs tracking-widest uppercase">
-                {project.name} Visual
-              </span>
-            </div>
+        {projects.map((project, i) => {
+          const rawSrc =
+            typeof project.image === 'object' && project.image !== null
+              ? theme === 'dark'
+                ? project.image.dark
+                : project.image.light
+              : project.image;
+          const imageSrc = rawSrc ? encodeURI(decodeURI(rawSrc)) : undefined;
+
+          return (
+            <motion.article 
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="group"
+            >
+              <h2 className="text-lg md:text-xl font-semibold mb-8 md:mb-12">{project.name}</h2>
+              
+              <div className="aspect-[16/9] md:aspect-[21/9] bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 mb-8 md:mb-12 relative overflow-hidden flex items-center justify-center p-6 group-hover:border-zinc-300 dark:group-hover:border-zinc-700 transition-colors">
+                {imageSrc ? (
+                  <img
+                    src={imageSrc}
+                    alt={`${project.name} preview`}
+                    className={
+                      project.id === 'savi'
+                        ? 'max-h-[60%] max-w-[60%] object-contain'
+                        : 'max-h-full max-w-full object-contain'
+                    }
+                    onError={(e) => {
+                      console.warn(`[ProjectsPage] Failed to load image for ${project.name}: ${imageSrc}`);
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <span className="text-zinc-400 dark:text-zinc-600 font-mono text-xs tracking-widest uppercase">
+                    {project.name} Visual
+                  </span>
+                )}
+              </div>
 
             <div className="max-w-2xl">
               <p className="text-[13px] md:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-8">
@@ -59,7 +87,8 @@ export const ProjectsPage: React.FC = () => {
               </a>
             </div>
           </motion.article>
-        ))}
+        );
+      })}
       </div>
 
       <footer className="mt-32 py-12 border-t border-zinc-200 dark:border-zinc-800/50 text-[11px] md:text-xs text-zinc-500 font-mono flex justify-between">
