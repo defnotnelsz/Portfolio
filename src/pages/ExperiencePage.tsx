@@ -23,8 +23,11 @@ export const ExperiencePage: React.FC = () => {
         </Link>
       </nav>
 
-      <div className="mb-24 md:mb-32">
-        <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-8">experience</h1>
+      <div className="mb-20 md:mb-28">
+        <div className="font-mono text-xs uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-3">
+          [ 02 // CHRONOLOGY &middot; FULL HISTORY ]
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">experience</h1>
         <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-3xl">
           Building across software engineering, AI, and technology leadership &mdash; from freelance development and student organizations to voice-based AI systems and real-world software engineering experience.
         </p>
@@ -41,7 +44,7 @@ export const ExperiencePage: React.FC = () => {
             className="relative pl-10 md:pl-16"
           >
             {/* Company Marker */}
-            <div className="absolute -left-[20px] top-0 w-10 h-10 bg-white dark:bg-[#0a0a0a] border border-zinc-200 dark:border-zinc-800 rounded flex items-center justify-center text-sm font-medium shadow-sm text-zinc-600 dark:text-zinc-400 z-10">
+            <div className="absolute -left-[20px] top-0 w-10 h-10 bg-white dark:bg-[#0a0a0a] border border-zinc-200 dark:border-zinc-800 rounded flex items-center justify-center text-sm font-semibold shadow-xs text-zinc-700 dark:text-zinc-300 z-10 frame-corner">
               {company.marker}
             </div>
             

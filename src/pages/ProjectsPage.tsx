@@ -49,8 +49,11 @@ export const ProjectsPage: React.FC = () => {
         </Link>
       </nav>
 
-      <div className="mb-20 md:mb-32">
-        <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">projects</h1>
+      <div className="mb-20 md:mb-28">
+        <div className="font-mono text-xs uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-3">
+          [ 01 // SELECTED WORKS &middot; ARCHIVE ]
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">projects</h1>
         <p className="text-base text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
           Detailed case studies and engineering notes across native mobile applications, full-stack intelligence platforms, and voice AI systems.
         </p>
@@ -105,7 +108,7 @@ export const ProjectsPage: React.FC = () => {
                 </p>
               )}
               
-              <div className="aspect-[16/9] md:aspect-[21/9] bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 mb-8 md:mb-10 relative overflow-hidden flex items-center justify-center p-6 md:p-12 group-hover:border-zinc-300 dark:group-hover:border-zinc-700 transition-colors">
+              <div className="aspect-[16/9] md:aspect-[21/9] bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 mb-8 md:mb-10 relative overflow-hidden flex items-center justify-center p-6 md:p-12 group-hover:border-zinc-400 dark:group-hover:border-zinc-600 transition-colors frame-corner">
                 {imageSrc ? (
                   <img
                     src={imageSrc}

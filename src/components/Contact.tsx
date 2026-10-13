@@ -1,5 +1,5 @@
 import React from 'react';
-import { socials } from '../data/socials';
+import { socials, email } from '../data/socials';
 import { ArrowUpRight } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -19,30 +19,67 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-24 border-t border-zinc-200 dark:border-zinc-800/50 min-h-[60vh] flex flex-col justify-center">
-      <div className="mb-16">
-        <h2 className="text-2xl font-semibold tracking-tight">
-          <span className="text-zinc-400 font-mono text-[11px] md:text-xs mr-4">05</span>
+    <section id="contact" className="py-24 border-t border-zinc-200/70 dark:border-zinc-800/70 min-h-[60vh] flex flex-col justify-center">
+      <div className="mb-14">
+        <div className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-2">
+          GET IN TOUCH // INQUIRIES & NETWORKING
+        </div>
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+          <span className="text-zinc-400 font-mono text-sm mr-3 font-normal">05</span>
           CONTACT
         </h2>
       </div>
       
-      <div className="flex flex-col space-y-6">
-        {socials.map((social) => (
-          <a 
-            key={social.name}
-            href={social.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-4 text-[15px] md:text-base font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors w-fit"
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Direct Email Card */}
+        <div className="lg:col-span-5 border border-zinc-200 dark:border-zinc-800 p-6 md:p-8 bg-white dark:bg-[#0a0a0a] frame-corner flex flex-col justify-between space-y-6">
+          <div className="space-y-3">
+            <div className="font-mono text-[11px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+              DIRECT INQUIRIES
+            </div>
+            <a 
+              href={`mailto:${email}`}
+              className="text-lg md:text-xl font-bold hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors break-all"
+            >
+              {email}
+            </a>
+          </div>
+
+          <div className="pt-4 border-t border-zinc-100 dark:border-zinc-900 flex items-center justify-between text-xs font-mono uppercase tracking-wider">
+            <span className="text-zinc-400 dark:text-zinc-500">LOCATION</span>
+            <span className="font-medium text-zinc-700 dark:text-zinc-300">CEBU, PHILIPPINES</span>
+          </div>
+
+          <a
+            href={`mailto:${email}`}
+            className="w-full text-center py-3 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 text-xs font-mono uppercase tracking-widest font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors block"
           >
-            <span className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
-              {iconMap[social.name]}
-            </span>
-            {social.name}
-            <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0" />
+            SEND AN EMAIL &rarr;
           </a>
-        ))}
+        </div>
+
+        {/* Social Platforms Grid */}
+        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {socials.map((social) => (
+            <a 
+              key={social.name}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-zinc-200 dark:border-zinc-800 p-5 bg-white dark:bg-[#0a0a0a] frame-corner flex items-center justify-between hover:border-zinc-400 dark:hover:border-zinc-600 transition-all"
+            >
+              <div className="flex items-center gap-3.5">
+                <span className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
+                  {iconMap[social.name]}
+                </span>
+                <span className="text-sm md:text-base font-semibold text-zinc-800 dark:text-zinc-200 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
+                  {social.name}
+                </span>
+              </div>
+              <ArrowUpRight size={16} className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors" />
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -31,38 +31,65 @@ export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, isMob
   };
 
   const navContent = (
-    <div className="flex flex-col h-full">
-      <div className="mb-12">
-        <h1 className="text-lg font-medium tracking-tight">Janelie Blanco</h1>
+    <div className="flex flex-col h-full justify-between">
+      <div>
+        <div className="mb-10 pb-6 border-b border-zinc-200/70 dark:border-zinc-800/70">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500" />
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+              PORTFOLIO // 2026
+            </span>
+          </div>
+          <h1 className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+            Janelie Blanco
+          </h1>
+        </div>
+
+        <nav className="space-y-2 flex flex-col" aria-label="Main Navigation">
+          {sections.map((section, idx) => {
+            const isActive = activeSection === section.id;
+            return (
+              <button
+                type="button"
+                key={section.id}
+                onClick={() => scrollTo(section.id)}
+                className={clsx(
+                  "group text-left flex items-center justify-between transition-all duration-200 w-full text-[13px] md:text-[14px] py-1.5 px-2 rounded-sm",
+                  isActive
+                    ? "text-zinc-900 dark:text-zinc-100 font-medium bg-zinc-100 dark:bg-zinc-900/80" 
+                    : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-50/80 dark:hover:bg-zinc-900/30"
+                )}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-3.5 inline-block flex-shrink-0 transition-opacity duration-200 font-mono text-xs text-zinc-900 dark:text-zinc-100">
+                    {isActive ? '\u2192' : ' '}
+                  </span>
+                  <span>{section.label}</span>
+                </div>
+                <span className="font-mono text-[10px] text-zinc-400 dark:text-zinc-600 transition-colors group-hover:text-zinc-500">
+                  0{idx}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
 
-      <nav className="flex-1 space-y-4 flex flex-col">
-        {sections.map((section) => (
-          <button
-            type="button"
-            key={section.id}
-            onClick={() => scrollTo(section.id)}
-            className={clsx(
-              "text-left flex items-center gap-3 transition-colors duration-200 w-fit text-[14px]",
-              activeSection === section.id 
-                ? "text-zinc-900 dark:text-zinc-100 font-medium" 
-                : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
-            )}
-          >
-            <span className="w-4 inline-block flex-shrink-0 transition-opacity duration-200 font-mono text-sm">
-              {activeSection === section.id ? '\u2192' : ' '}
-            </span>
-            {section.label}
-          </button>
-        ))}
-      </nav>
-
-      <div className="mt-12 space-y-6">
+      <div className="pt-8 border-t border-zinc-200/70 dark:border-zinc-800/70 space-y-5">
         <ThemeToggle />
-        <div>
-          <a href={`mailto:${email}`} className="text-[11px] md:text-xs font-mono text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+        <div className="space-y-1">
+          <div className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+            CONTACT
+          </div>
+          <a 
+            href={`mailto:${email}`} 
+            className="block text-[11px] md:text-xs font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors truncate"
+          >
             {email}
           </a>
+        </div>
+        <div className="font-mono text-[10px] text-zinc-400 dark:text-zinc-600">
+          Cebu, Philippines
         </div>
       </div>
     </div>

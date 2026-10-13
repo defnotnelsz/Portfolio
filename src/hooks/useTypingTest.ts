@@ -1,21 +1,30 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { 
+  type Difficulty, 
+  type Duration, 
+  getRandomPassage 
+} from '../data/typingPassages';
 
-const PASSAGES = [
-  "The quick brown fox jumps over the lazy dog. Programming is the art of telling another human what one wants the computer to do. Code is read much more often than it is written.",
-  "Design is not just what it looks like and feels like. Design is how it works. Innovation distinguishes between a leader and a follower. Stay hungry, stay foolish.",
-  "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. First, solve the problem. Then, write the code."
-];
+export function useTypingTest(
+  initialDifficulty: Difficulty = 'medium',
+  initialDuration: Duration = 30
+) {
+  const [difficulty, setDifficultyState] = useState<Difficulty>(initialDifficulty);
+  const [duration, setDurationState] = useState<Duration>(initialDuration);
 
-const getRandomPassage = () => PASSAGES[Math.floor(Math.random() * PASSAGES.length)];
-
-export function useTypingTest() {
-  const [passage, setPassage] = useState<string>(getRandomPassage);
+  const [passage, setPassage] = useState<string>(() => getRandomPassage(initialDifficulty));
   const [input, setInput] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  
+  const [timeLeft, setTimeLeft] = useState<number>(initialDuration);
+  const [timeElapsed, setTimeElapsed] = useState<number>(0);
+
   const timerRef = useRef<number | null>(null);
+  const passageRef = useRef(passage);
+
+  useEffect(() => {
+    passageRef.current = passage;
+  }, [passage]);
 
   const clearTimer = useCallback(() => {
     if (timerRef.current !== null) {
@@ -24,14 +33,29 @@ export function useTypingTest() {
     }
   }, []);
 
-  const initTest = useCallback(() => {
+  const resetTest = useCallback((
+    targetDifficulty: Difficulty = difficulty,
+    targetDuration: Duration = duration
+  ) => {
     clearTimer();
-    setPassage(getRandomPassage());
+    const nextPassage = getRandomPassage(targetDifficulty, passageRef.current);
+    setPassage(nextPassage);
     setInput('');
     setIsActive(false);
     setIsFinished(false);
+    setTimeLeft(targetDuration);
     setTimeElapsed(0);
-  }, [clearTimer]);
+  }, [clearTimer, difficulty, duration]);
+
+  const setDifficulty = useCallback((newDifficulty: Difficulty) => {
+    setDifficultyState(newDifficulty);
+    resetTest(newDifficulty, duration);
+  }, [duration, resetTest]);
+
+  const setDuration = useCallback((newDuration: Duration) => {
+    setDurationState(newDuration);
+    resetTest(difficulty, newDuration);
+  }, [difficulty, resetTest]);
 
   useEffect(() => {
     return () => {
@@ -41,18 +65,27 @@ export function useTypingTest() {
 
   const handleInput = (val: string) => {
     if (isFinished) return;
-    
+
     if (!isActive && val.length > 0) {
       setIsActive(true);
       clearTimer();
       timerRef.current = window.setInterval(() => {
-        setTimeElapsed(prev => prev + 1);
+        setTimeElapsed(prevElapsed => prevElapsed + 1);
+        setTimeLeft(prevLeft => {
+          if (prevLeft <= 1) {
+            clearTimer();
+            setIsFinished(true);
+            setIsActive(false);
+            return 0;
+          }
+          return prevLeft - 1;
+        });
       }, 1000);
     }
 
     setInput(val);
 
-    if (val.length >= passage.length) {
+    if (val.length >= passage.length && passage.length > 0) {
       setIsFinished(true);
       setIsActive(false);
       clearTimer();
@@ -62,15 +95,13 @@ export function useTypingTest() {
   const getStats = () => {
     const effectiveSeconds = Math.max(timeElapsed, 1);
     const timeInMinutes = effectiveSeconds / 60;
-    
+
     let correctChars = 0;
     for (let i = 0; i < input.length; i++) {
       if (input[i] === passage[i]) correctChars++;
     }
-    
+
     const accuracy = input.length > 0 ? Math.round((correctChars / input.length) * 100) : 100;
-    
-    // Standard WPM calculation (5 chars = 1 word)
     const rawWpm = input.length > 0 ? Math.round((input.length / 5) / timeInMinutes) : 0;
     const netWpm = input.length > 0 ? Math.round((correctChars / 5) / timeInMinutes) : 0;
 
@@ -78,7 +109,9 @@ export function useTypingTest() {
       wpm: isNaN(netWpm) ? 0 : Math.max(0, netWpm),
       accuracy,
       rawWpm: isNaN(rawWpm) ? 0 : rawWpm,
-      time: timeElapsed
+      time: timeElapsed,
+      timeLeft,
+      correctChars,
     };
   };
 
@@ -87,8 +120,14 @@ export function useTypingTest() {
     input,
     isActive,
     isFinished,
+    timeLeft,
+    timeElapsed,
+    difficulty,
+    duration,
+    setDifficulty,
+    setDuration,
     handleInput,
-    resetTest: initTest,
-    stats: getStats()
+    resetTest: () => resetTest(difficulty, duration),
+    stats: getStats(),
   };
 }

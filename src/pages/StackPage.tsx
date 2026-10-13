@@ -45,30 +45,39 @@ export const StackPage: React.FC = () => {
           </nav>
 
           <div className="mb-20 md:mb-24">
-            <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-8">tech stack</h1>
+            <div className="font-mono text-xs uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-3">
+              [ 03 // TECHNICAL INVENTORY &middot; FULL STACK ]
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">tech stack</h1>
             <p className="text-[15px] md:text-[17px] leading-relaxed max-w-2xl text-zinc-600 dark:text-zinc-400">
               The tools, frameworks, and platforms I reach for — across the front end, back end, infrastructure, and AI.
             </p>
           </div>
 
-          <div className="space-y-24 md:space-y-32">
+          <div className="space-y-12 md:space-y-16">
             {stack.map((category, i) => (
               <motion.section 
                 key={category.category}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="border border-zinc-200 dark:border-zinc-800 p-6 md:p-8 bg-white dark:bg-[#0a0a0a] frame-corner"
               >
-                <h2 className="text-sm md:text-[15px] font-semibold mb-8 uppercase tracking-wider text-zinc-900 dark:text-zinc-100 font-mono">
-                  {category.category}
-                </h2>
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-zinc-100 dark:border-zinc-900 font-mono text-xs">
+                  <h2 className="font-semibold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
+                    [ 0{i + 1} // {category.category} ]
+                  </h2>
+                  <span className="text-zinc-400 dark:text-zinc-500">
+                    {category.items.length} tools
+                  </span>
+                </div>
                 
-                <div className="flex flex-wrap gap-3 md:gap-4">
+                <div className="flex flex-wrap gap-2.5 md:gap-3">
                   {category.items.map((item) => (
                     <span 
                       key={item}
-                      className="px-4 py-2 border border-zinc-200 dark:border-zinc-800/80 rounded-md font-mono text-[13px] md:text-sm text-zinc-700 dark:text-zinc-300 bg-white dark:bg-[#0a0a0a]"
+                      className="px-3.5 py-1.5 border border-zinc-200/80 dark:border-zinc-800/80 rounded-xs font-mono text-xs md:text-sm text-zinc-700 dark:text-zinc-300 bg-zinc-50/60 dark:bg-zinc-900/40 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
                     >
                       {item}
                     </span>
