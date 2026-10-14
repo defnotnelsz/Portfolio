@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { HalftonePortrait } from './HalftonePortrait';
 
 export const Hero: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="lg:col-span-7 xl:col-span-8 flex flex-col space-y-8"
+          className="lg:col-span-7 xl:col-span-7 flex flex-col space-y-8"
         >
           <div className="space-y-3">
             <div className="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
@@ -65,14 +66,14 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="lg:col-span-5 xl:col-span-4 self-center lg:self-start w-full max-w-sm mx-auto lg:mx-0"
+          className="lg:col-span-5 xl:col-span-5 self-center lg:self-start w-full max-w-sm lg:max-w-[430px] mx-auto lg:mx-0"
         >
           <div className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0a0a0a] p-2 relative frame-corner">
-            <div className="aspect-[4/5] bg-gradient-to-b from-zinc-100 via-zinc-100/60 to-zinc-200/40 dark:from-zinc-900 dark:via-zinc-900/60 dark:to-zinc-950 relative overflow-hidden flex items-end justify-center">
-              <img 
+            <div className="aspect-[4/5] bg-zinc-100 dark:bg-black relative overflow-hidden flex items-end justify-center">
+              <HalftonePortrait 
                 src="/profile-transparent.png" 
                 alt="Janelie Sayson Blanco" 
-                className="w-full h-full object-cover object-top select-none"
+                className="w-full h-full"
               />
               <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/20 dark:from-black/40 to-transparent pointer-events-none" />
             </div>
