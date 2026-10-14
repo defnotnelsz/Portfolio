@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import { Hero } from '../components/Hero';
+import { About } from '../components/About';
 import { Projects } from '../components/Projects';
 import { Experience } from '../components/Experience';
 import { Stack } from '../components/Stack';
@@ -12,6 +13,7 @@ import { scrollToHash } from '../utils/scrollToHash';
 
 const sections = [
   { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects' },
   { id: 'experience', label: 'Experience' },
   { id: 'stack', label: 'Stack' },
@@ -47,6 +49,7 @@ export const Home = () => {
       
       <main className="md:ml-56 lg:ml-64 px-6 md:px-16 lg:px-24 xl:px-32 max-w-7xl">
         <Hero />
+        <About />
         <Projects />
         <Experience />
         <Stack />
