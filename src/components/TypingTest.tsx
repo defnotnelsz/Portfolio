@@ -7,6 +7,7 @@ import {
 } from '../data/typingPassages';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
+import { ConfettiCanvas } from './ConfettiCanvas';
 
 // Pixel Art Racer SVG component
 const PixelCar: React.FC<{
@@ -227,6 +228,10 @@ export const TypingTest: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isTestOpen, setIsTestOpen] = useState(false);
 
+  const targetBenchmark = getBenchmark(difficulty, duration);
+  // Celebratory burst activates strictly when test finishes with score beating benchmark
+  const isWinner = isFinished && stats.wpm > targetBenchmark;
+
   const focusInput = () => {
     setTimeout(() => inputRef.current?.focus(), 50);
   };
@@ -263,7 +268,6 @@ export const TypingTest: React.FC = () => {
     }
   }, [isTestOpen, resetTest]);
 
-  const targetBenchmark = getBenchmark(difficulty, duration);
   const currentDurationLabel = DURATION_OPTIONS.find(d => d.value === duration)?.label || `${duration} SEC`;
   const currentDifficultyLabel = DIFFICULTY_OPTIONS.find(d => d.value === difficulty)?.label || difficulty.toUpperCase();
 
@@ -383,6 +387,7 @@ export const TypingTest: React.FC = () => {
             aria-label="Typing test modal"
             className="fixed inset-0 z-50 bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-md flex flex-col pt-12 md:pt-16 px-4 md:px-16 lg:px-24 overflow-y-auto"
           >
+            <ConfettiCanvas active={isWinner} />
             <div className="max-w-4xl mx-auto w-full pb-16">
               {/* Top Modal Header & Exit */}
               <div className="flex items-center justify-between pb-4 mb-6 border-b border-zinc-200/70 dark:border-zinc-800/70 font-mono text-xs">
@@ -678,7 +683,10 @@ export const TypingTest: React.FC = () => {
 
                   <div className="flex gap-4 mb-2">
                     <button
-                      onClick={() => { resetTest(); focusInput(); }}
+                      onClick={() => { 
+                        resetTest(); 
+                        focusInput(); 
+                      }}
                       className="bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 px-8 py-3.5 text-xs font-mono uppercase tracking-widest font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors"
                     >
                       Try Again

@@ -33,7 +33,7 @@ export const DIFFICULTY_OPTIONS: { value: Difficulty; label: string; description
 
 export const BENCHMARKS: Record<Difficulty, Record<Duration, number>> = {
   easy: {
-    15: 114,
+    15: 50,
     30: 105,
     60: 80,
     180: 85,
