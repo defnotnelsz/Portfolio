@@ -17,16 +17,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, isMob
   const location = useLocation();
 
   const scrollTo = (id: string) => {
-    if (location.pathname !== '/') {
-      navigate('/#' + id);
-      setIsMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
+
+    if (id === 'home') {
+      if (location.pathname !== '/' || (location.hash && location.hash !== '#home')) {
+        navigate('/#home');
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
       return;
     }
 
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setIsMobileMenuOpen(false);
+    const targetHash = `#${id}`;
+    if (location.pathname !== '/' || location.hash !== targetHash) {
+      navigate(`/#${id}`);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
@@ -113,7 +122,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, isMob
       )}
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:block fixed top-0 left-0 h-screen w-56 lg:w-64 border-r border-zinc-200 dark:border-zinc-800/50 p-8 py-12">
+      <aside className="hidden md:block fixed top-0 left-0 h-screen w-56 lg:w-64 border-r border-zinc-200 dark:border-zinc-800/50 p-8 py-12 z-30">
         {navContent}
       </aside>
     </>

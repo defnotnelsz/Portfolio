@@ -127,7 +127,7 @@ export function useTypingTest(
     setDifficulty,
     setDuration,
     handleInput,
-    resetTest: () => resetTest(difficulty, duration),
+    resetTest,
     stats: getStats(),
   };
 }

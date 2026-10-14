@@ -8,6 +8,7 @@ import { Stack } from '../components/Stack';
 import { TypingTest } from '../components/TypingTest';
 import { Contact } from '../components/Contact';
 import { useActiveSection } from '../hooks/useActiveSection';
+import { scrollToHash } from '../utils/scrollToHash';
 
 const sections = [
   { id: 'home', label: 'Home' },
@@ -28,13 +29,8 @@ export const Home = () => {
 
   useEffect(() => {
     if (location.hash) {
-      const id = location.hash.replace('#', '');
-      const el = document.getElementById(id);
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      }
+      const cleanup = scrollToHash(location.hash);
+      return cleanup;
     } else {
       window.scrollTo(0, 0);
     }

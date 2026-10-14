@@ -2,27 +2,24 @@ import React, { useEffect } from 'react';
 import { projects } from '../data/projects';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
+import { scrollToHash } from '../utils/scrollToHash';
 
 const currentYear = new Date().getFullYear();
 
 export const ProjectsPage: React.FC = () => {
   const { theme } = useTheme();
+  const location = useLocation();
 
   useEffect(() => {
-    if (window.location.hash) {
-      const id = window.location.hash.replace('#', '');
-      const el = document.getElementById(id);
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-        return;
-      }
+    if (location.hash) {
+      const cleanup = scrollToHash(location.hash);
+      return cleanup;
+    } else {
+      window.scrollTo(0, 0);
     }
-    window.scrollTo(0, 0);
-  }, []);
+  }, [location.hash, location.pathname]);
 
   const getImageClass = (id: string) => {
     switch (id) {

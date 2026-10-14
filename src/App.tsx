@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { ExperiencePage } from './pages/ExperiencePage';
@@ -14,7 +14,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/experience/history" element={<ExperiencePage />} />
+          <Route path="/experience" element={<Navigate to="/experience/history" replace />} />
           <Route path="/stack" element={<StackPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </div>

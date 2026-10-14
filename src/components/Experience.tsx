@@ -1,16 +1,9 @@
 import React from 'react';
 import { experiences } from '../data/experience';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Experience: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleHistoryNavigation = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/experience/history');
-  };
-
   // Flatten the nested experience structure into individual roles for the preview table
   const flattenedRoles = experiences.flatMap(company => 
     company.roles.map(role => ({
@@ -37,7 +30,6 @@ export const Experience: React.FC = () => {
         </div>
         <Link 
           to="/experience/history" 
-          onClick={handleHistoryNavigation}
           className="text-[11px] md:text-xs hover:text-zinc-500 dark:hover:text-zinc-300 transition-colors hidden md:block uppercase tracking-wider font-mono cursor-pointer relative z-10"
         >
           SEE FULL HISTORY &rarr;
@@ -88,7 +80,6 @@ export const Experience: React.FC = () => {
       <div className="mt-10 md:hidden">
         <Link 
           to="/experience/history" 
-          onClick={handleHistoryNavigation}
           className="text-[11px] md:text-xs font-mono hover:text-zinc-500 transition-colors uppercase tracking-wider inline-block cursor-pointer relative z-10"
         >
           SEE FULL HISTORY &rarr;

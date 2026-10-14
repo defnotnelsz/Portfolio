@@ -191,17 +191,17 @@ const CarTrack: React.FC<CarTrackProps> = ({
         <span className="text-right">
           {isFinished 
             ? (userWpm > targetBenchmark 
-                ? "🏁 You crossed the finish line first!" 
+                ? "🏁 Woahhhhh! You crossed the finish line ahead of me!" 
                 : userWpm === targetBenchmark 
                 ? "🏁 Dead heat at the finish line!" 
-                : "🏁 Janelie crossed the finish line first.")
+                : "🏁 I crossed the finish line first this time!")
             : isActive 
             ? (userWpm > targetBenchmark 
-                ? "🔥 Pulling ahead of Janelie!" 
+                ? "🔥 Woah, you're pulling ahead of my pace!" 
                 : userWpm === targetBenchmark 
-                ? "⚡ Neck and neck with Janelie!" 
-                : "⚠️ Trailing Janelie's pace.")
-            : "Cars launch on your first keystroke"}
+                ? "⚡ We're neck and neck right now!" 
+                : "⚠️ Giving it my all to keep my lead...")
+            : "Engines ready - start typing to race me!"}
         </span>
       </div>
     </div>
@@ -223,7 +223,7 @@ export const TypingTest: React.FC = () => {
     handleInput, 
     resetTest, 
     stats 
-  } = useTypingTest('medium', 30);
+  } = useTypingTest('easy', 15);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isTestOpen, setIsTestOpen] = useState(false);
@@ -242,6 +242,7 @@ export const TypingTest: React.FC = () => {
 
       if (e.key === 'Escape') {
         setIsTestOpen(false);
+        resetTest();
       }
       if (e.key === 'Tab') {
         e.preventDefault();
@@ -263,10 +264,8 @@ export const TypingTest: React.FC = () => {
     if (isTestOpen) {
       const timer = setTimeout(() => inputRef.current?.focus(), 50);
       return () => clearTimeout(timer);
-    } else {
-      resetTest();
     }
-  }, [isTestOpen, resetTest]);
+  }, [isTestOpen]);
 
   const currentDurationLabel = DURATION_OPTIONS.find(d => d.value === duration)?.label || `${duration} SEC`;
   const currentDifficultyLabel = DIFFICULTY_OPTIONS.find(d => d.value === difficulty)?.label || difficulty.toUpperCase();
@@ -302,10 +301,10 @@ export const TypingTest: React.FC = () => {
 
   // Exact comparison messages required by specification
   const resultHeading = stats.wpm > targetBenchmark
-    ? "You beat Janelie!"
+    ? "Amazing! You crushed my record!"
     : stats.wpm === targetBenchmark
-    ? "You matched Janelie's WPM!"
-    : "You didn't beat Janelie.";
+    ? "So close! You tied my exact WPM!"
+    : "Not quite fast enough! Care for a rematch?";
 
   return (
     <section id="typing-test" className="py-24 border-t border-zinc-200/70 dark:border-zinc-800/70">
@@ -398,7 +397,10 @@ export const TypingTest: React.FC = () => {
                   <span className="hidden sm:inline text-zinc-400">[{currentDifficultyLabel}] &middot; [{currentDurationLabel}]</span>
                 </div>
                 <button
-                  onClick={() => setIsTestOpen(false)}
+                  onClick={() => {
+                    setIsTestOpen(false);
+                    resetTest();
+                  }}
                   aria-label="Close typing test"
                   className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 uppercase tracking-wider px-2.5 py-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
                 >

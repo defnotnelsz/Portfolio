@@ -25,3 +25,8 @@ dist-ssr
 
 # Temporary files
 scratch/
+
+# Test profiles and automation artifacts
+.chrome-test-profile/
+test-*.mjs
+test-*.js
