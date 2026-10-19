@@ -69,7 +69,7 @@ export const projects: Project[] = [
         title: 'Results & Key Learnings',
         content: [
           'Strengthened foundational mobile development skills in Android lifecycle management, relational SQLite schemas, and offline data handling.',
-          'TODO: Add target Android API level benchmarks and any planned camera integration details.',
+          'For future improvements, include target Android API level benchmarks and details of any planned camera integration.',
         ],
       },
     ],
@@ -118,7 +118,7 @@ export const projects: Project[] = [
         title: 'Results & Practical Impact',
         content: [
           'Successfully deployed the live platform at phlifevent.vercel.app to empower data-driven decisions on event participation.',
-          'TODO: Add specific event volume processed and team adoption metrics upon company clearance.',
+          'For future improvements, include the number of events processed and team adoption metrics, once approved for public disclosure by the company.',
         ],
       },
     ],
@@ -168,7 +168,7 @@ export const projects: Project[] = [
         title: 'Results & Takeaways',
         content: [
           'Publicly deployed at savi-interview-review.vercel.app with verified end-to-end PDF generation across multiple professional tracks.',
-          'TODO: Add audio latency optimization benchmarks and user feedback metrics.',
+          'For future improvements, include audio latency benchmarks and user feedback metrics to evaluate performance and user experience.',
         ],
       },
     ],

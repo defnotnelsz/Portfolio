@@ -14,7 +14,12 @@ interface AboutRoomSceneProps {
 }
 
 // 1. The Main Gaming Room GLB Model
-const GamingRoomModel: React.FC = () => {
+interface GamingRoomModelProps {
+  onSelectGuitar?: () => void;
+  onHoverGuitar?: (hover: boolean) => void;
+}
+
+const GamingRoomModel: React.FC<GamingRoomModelProps> = ({ onSelectGuitar, onHoverGuitar }) => {
   const gltf = useGLTF('/models/gaming-room.glb');
   const roomScene = useMemo(() => gltf.scene.clone(true), [gltf.scene]);
 
@@ -28,7 +33,43 @@ const GamingRoomModel: React.FC = () => {
     });
   }, [roomScene]);
 
-  return <primitive object={roomScene} position={[0, 0, 0]} />;
+  const isGuitarObject = (obj: THREE.Object3D | null | undefined): boolean => {
+    let curr = obj;
+    while (curr) {
+      if (
+        curr.name &&
+        (curr.name.includes('musical_instrument') || curr.name.toLowerCase().includes('guitar'))
+      ) {
+        return true;
+      }
+      curr = curr.parent;
+    }
+    return false;
+  };
+
+  return (
+    <primitive
+      object={roomScene}
+      position={[0, 0, 0]}
+      onClick={(e: { object?: THREE.Object3D; stopPropagation: () => void }) => {
+        if (isGuitarObject(e.object)) {
+          e.stopPropagation();
+          onSelectGuitar?.();
+        }
+      }}
+      onPointerOver={(e: { object?: THREE.Object3D; stopPropagation: () => void }) => {
+        if (isGuitarObject(e.object)) {
+          e.stopPropagation();
+          onHoverGuitar?.(true);
+        }
+      }}
+      onPointerOut={(e: { object?: THREE.Object3D }) => {
+        if (isGuitarObject(e.object)) {
+          onHoverGuitar?.(false);
+        }
+      }}
+    />
+  );
 };
 
 // 2. Cat Sleeping Zzz Billboard Effect
@@ -112,7 +153,65 @@ interface InteractiveItemProps {
   prefersReducedMotion: boolean;
 }
 
-const InteractiveItem: React.FC<InteractiveItemProps> = ({
+// 3a. Interactive Wall-Mounted Guitar
+const InteractiveGuitar: React.FC<InteractiveItemProps> = ({
+  obj,
+  isSelected,
+  isHovered,
+  onSelect,
+  onHover,
+}) => {
+  return (
+    <group position={obj.position}>
+      {/* Wall Beacon Ring directly behind the guitar on the wall */}
+      <mesh position={[-0.038, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <ringGeometry args={[0.34, 0.42, 32]} />
+        <meshBasicMaterial
+          color={isSelected ? '#ffffff' : isHovered ? '#67e8f9' : '#ffffff'}
+          transparent
+          opacity={isSelected ? 0.85 : isHovered ? 0.75 : 0.22}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {/* Subtle hover silhouette outline */}
+      {(isHovered || isSelected) && (
+        <mesh>
+          <boxGeometry args={[0.22, 1.48, 0.50]} />
+          <meshBasicMaterial
+            color={isSelected ? '#ffffff' : '#67e8f9'}
+            wireframe
+            transparent
+            opacity={isSelected ? 0.35 : 0.20}
+            depthWrite={false}
+          />
+        </mesh>
+      )}
+
+      {/* Invisible Interactive Hit Proxy encompassing the entire guitar */}
+      <mesh
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelect();
+        }}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          onHover(true);
+        }}
+        onPointerOut={() => {
+          onHover(false);
+        }}
+      >
+        <boxGeometry args={[0.25, 1.52, 0.52]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+    </group>
+  );
+};
+
+// 3b. Interactive Imported Models (Cat, Rabbit, Cookies, Coffee, Journal)
+const InteractiveImportedItem: React.FC<InteractiveItemProps> = ({
   obj,
   isSelected,
   isHovered,
@@ -144,7 +243,7 @@ const InteractiveItem: React.FC<InteractiveItemProps> = ({
       ? 0.18
       : obj.id === 'icedcoffee'
       ? 0.13
-      : 0.15;
+      : 0.18;
 
   // Render normalized geometry so each model's bottom sits precisely at group Y = 0
   const renderModel = () => {
@@ -219,6 +318,13 @@ const InteractiveItem: React.FC<InteractiveItemProps> = ({
       {obj.id === 'cat' && <CatZzzBillboard prefersReducedMotion={prefersReducedMotion} />}
     </group>
   );
+};
+
+const InteractiveItem: React.FC<InteractiveItemProps> = (props) => {
+  if (props.obj.id === 'guitar') {
+    return <InteractiveGuitar {...props} />;
+  }
+  return <InteractiveImportedItem {...props} />;
 };
 
 // 4. Smooth Camera and Orbit Controls Controller
@@ -319,10 +425,16 @@ export const AboutRoomScene: React.FC<AboutRoomSceneProps> = ({
       <SceneLighting />
 
       <Suspense fallback={null}>
-        {/* Main 3D Gaming Room Model */}
-        <GamingRoomModel />
+        {/* Main 3D Gaming Room Model with guitar interaction */}
+        <GamingRoomModel
+          onSelectGuitar={() => onSelectObject('guitar')}
+          onHoverGuitar={(hover) => {
+            onHoverObject(hover ? 'guitar' : null);
+            document.body.style.cursor = hover ? 'pointer' : 'auto';
+          }}
+        />
 
-        {/* 5 Interactive 3D Objects */}
+        {/* 6 Interactive 3D Objects */}
         {ROOM_OBJECTS.map((obj) => (
           <InteractiveItem
             key={obj.id}
@@ -345,7 +457,7 @@ export const AboutRoomScene: React.FC<AboutRoomSceneProps> = ({
         target={[-0.6, 0.7, -2.4]}
         enableDamping
         dampingFactor={0.05}
-        minDistance={2.2}
+        minDistance={1.0}
         maxDistance={8.5}
         minPolarAngle={Math.PI / 6}
         maxPolarAngle={Math.PI / 2.2}

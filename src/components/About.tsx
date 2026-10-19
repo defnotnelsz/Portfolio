@@ -196,7 +196,7 @@ export const About: React.FC = () => {
                   <ChevronLeft size={15} />
                 </button>
                 <span className="text-[11px] font-mono px-1.5 text-zinc-400">
-                  {selectedObject.number} / 05
+                  {selectedObject.number} / {String(ROOM_OBJECTS.length).padStart(2, '0')}
                 </span>
                 <button
                   type="button"
@@ -213,7 +213,7 @@ export const About: React.FC = () => {
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-sm border border-zinc-800 text-[11px] font-mono uppercase tracking-wider text-zinc-400 bg-black/80 backdrop-blur-md">
               <Sparkles size={13} className="text-zinc-300" />
               <span>
-                {hoveredObject ? `HOVER: ${hoveredObject.shortLabel}` : '5 INTERACTIVE ARTIFACTS'}
+                {hoveredObject ? `HOVER: ${hoveredObject.shortLabel}` : `${ROOM_OBJECTS.length} INTERACTIVE ARTIFACTS`}
               </span>
             </div>
           )}
