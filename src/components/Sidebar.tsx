@@ -1,6 +1,5 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { ThemeToggle } from './ThemeToggle';
 import { email } from '../data/socials';
 import { Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -85,7 +84,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, isMob
       </div>
 
       <div className="pt-8 border-t border-zinc-200/70 dark:border-zinc-800/70 space-y-5">
-        <ThemeToggle />
         <div className="space-y-1">
           <div className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
             CONTACT

@@ -9,11 +9,11 @@
 
 @layer base {
   body {
-    @apply bg-white text-zinc-900 dark:bg-[#0a0a0a] dark:text-[#f5f5f5] transition-colors duration-300 selection:bg-zinc-200 dark:selection:bg-zinc-800 antialiased;
+    @apply bg-[#0a0a0a] text-[#f5f5f5] selection:bg-zinc-800 antialiased;
   }
 
   ::selection {
-    @apply bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100;
+    @apply bg-zinc-800 text-zinc-100;
   }
 }
 
@@ -46,4 +46,3 @@
   bottom: -6px;
   right: -5px;
 }
-
