@@ -8,8 +8,8 @@ export const Projects: React.FC = () => {
   const rest = projects.slice(1);
 
   return (
-    <section id="projects" className="py-24 border-t border-zinc-200/70 dark:border-zinc-800/70">
-      <div className="mb-14">
+    <section id="projects" className="py-16 md:py-20 lg:py-24 border-t border-zinc-200/70 dark:border-zinc-800/70">
+      <div className="mb-10 md:mb-12">
         <div className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-2">
           SELECTED WORKS &middot; 03 FEATURED BUILDS
         </div>
@@ -32,7 +32,7 @@ export const Projects: React.FC = () => {
           </motion.div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {rest.map((project, i) => (
             <motion.div
               key={project.id}

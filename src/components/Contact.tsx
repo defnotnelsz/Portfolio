@@ -19,8 +19,8 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-24 border-t border-zinc-200/70 dark:border-zinc-800/70 min-h-[60vh] flex flex-col justify-center">
-      <div className="mb-14">
+    <section id="contact" className="py-16 md:py-20 lg:py-24 border-t border-zinc-200/70 dark:border-zinc-800/70 min-h-[50vh] flex flex-col justify-center">
+      <div className="mb-10 md:mb-12">
         <div className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-2">
           GET IN TOUCH // INQUIRIES & NETWORKING
         </div>
@@ -30,7 +30,7 @@ export const Contact: React.FC = () => {
         </h2>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* Direct Email Card */}
         <div className="lg:col-span-5 border border-zinc-200 dark:border-zinc-800 p-6 md:p-8 bg-white dark:bg-[#0a0a0a] frame-corner flex flex-col justify-between space-y-6">
           <div className="space-y-3">

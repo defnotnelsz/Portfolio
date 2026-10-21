@@ -636,6 +636,33 @@ const SceneLighting: React.FC<SceneLightingProps> = ({ lightingSources }) => {
   );
 };
 
+// Responsive Camera Framing Controller to fit the room comfortably without manual zoom
+const ResponsiveCameraFramer: React.FC = () => {
+  useFrame((state) => {
+    const aspect = state.size.width / state.size.height;
+    const cam = state.camera;
+    if (cam instanceof THREE.PerspectiveCamera) {
+      let targetFov = 40;
+      if (aspect < 0.75) {
+        targetFov = 58;
+      } else if (aspect < 1.0) {
+        targetFov = 52;
+      } else if (aspect < 1.25) {
+        targetFov = 46;
+      } else if (aspect < 1.5) {
+        targetFov = 42;
+      }
+
+      if (Math.abs(cam.fov - targetFov) > 0.05) {
+        cam.fov = THREE.MathUtils.lerp(cam.fov, targetFov, 0.1);
+        cam.updateProjectionMatrix();
+      }
+    }
+  });
+
+  return null;
+};
+
 export const AboutRoomScene: React.FC<AboutRoomSceneProps> = ({
   selectedId,
   hoveredId,
@@ -644,6 +671,13 @@ export const AboutRoomScene: React.FC<AboutRoomSceneProps> = ({
   prefersReducedMotion,
 }) => {
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
+
+  // Restore cursor on component unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.cursor = 'auto';
+    };
+  }, []);
 
   const [lightingSources, setLightingSources] = useState<{
     cyanHex: [number, number, number];
@@ -677,7 +711,7 @@ export const AboutRoomScene: React.FC<AboutRoomSceneProps> = ({
   return (
     <Canvas
       shadows
-      camera={{ fov: 42, near: 0.1, far: 50, position: [3.2, 3.0, 1.4] }}
+      camera={{ fov: 40, near: 0.1, far: 50, position: [3.2, 3.0, 1.4] }}
       gl={{
         antialias: true,
         alpha: false,
@@ -693,6 +727,8 @@ export const AboutRoomScene: React.FC<AboutRoomSceneProps> = ({
       }}
     >
       <color attach="background" args={['#0a0a0a']} />
+
+      <ResponsiveCameraFramer />
 
       <SceneLighting lightingSources={lightingSources} />
 

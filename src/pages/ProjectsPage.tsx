@@ -35,8 +35,8 @@ export const ProjectsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 md:px-16 lg:px-24 xl:px-32 max-w-5xl mx-auto py-16 md:py-24">
-      <nav className="mb-16 md:mb-24">
+    <div className="min-h-screen px-5 sm:px-8 md:px-10 lg:px-12 max-w-5xl mx-auto py-12 md:py-16">
+      <nav className="mb-10 md:mb-16">
         <Link 
           to="/#projects" 
           className="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 rounded-sm"
@@ -46,7 +46,7 @@ export const ProjectsPage: React.FC = () => {
         </Link>
       </nav>
 
-      <div className="mb-20 md:mb-28">
+      <div className="mb-14 md:mb-20">
         <div className="font-mono text-xs uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-3">
           [ 01 // SELECTED WORKS &middot; ARCHIVE ]
         </div>
@@ -200,7 +200,7 @@ export const ProjectsPage: React.FC = () => {
         })}
       </div>
 
-      <footer className="mt-32 py-12 border-t border-zinc-200 dark:border-zinc-800/50 text-[11px] md:text-xs text-zinc-500 font-mono flex justify-between">
+      <footer className="mt-24 py-10 border-t border-zinc-200 dark:border-zinc-800/50 text-[11px] md:text-xs text-zinc-500 font-mono flex justify-between">
         <span>&copy; {currentYear} Janelie Sayson Blanco.</span>
         <span>Professional Portfolio</span>
       </footer>

@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 
 export const Stack: React.FC = () => {
   return (
-    <section id="stack" className="py-24 border-t border-zinc-200/70 dark:border-zinc-800/70">
-      <div className="mb-14">
+    <section id="stack" className="py-16 md:py-20 lg:py-24 border-t border-zinc-200/70 dark:border-zinc-800/70">
+      <div className="mb-10 md:mb-12">
         <div className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-2">
           TECHNOLOGY MATRIX &middot; {stack.length} DISCIPLINES
         </div>
@@ -15,7 +15,7 @@ export const Stack: React.FC = () => {
         </h2>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
         {stack.map((cat, i) => (
           <motion.div
             key={cat.category}

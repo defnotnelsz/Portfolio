@@ -307,8 +307,8 @@ export const TypingTest: React.FC = () => {
     : "Not quite fast enough! Care for a rematch?";
 
   return (
-    <section id="typing-test" className="py-24 border-t border-zinc-200/70 dark:border-zinc-800/70">
-      <div className="mb-14">
+    <section id="typing-test" className="py-16 md:py-20 lg:py-24 border-t border-zinc-200/70 dark:border-zinc-800/70">
+      <div className="mb-10 md:mb-12">
         <div className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-2">
           INTERACTIVE // DEVELOPER SPEED BENCHMARK
         </div>

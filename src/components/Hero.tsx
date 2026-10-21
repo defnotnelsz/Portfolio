@@ -5,13 +5,13 @@ import { HalftonePortrait } from './HalftonePortrait';
 
 export const Hero: React.FC = () => {
   return (
-    <section id="home" className="min-h-screen flex flex-col justify-center py-20 md:py-28">
+    <section id="home" className="min-h-[80vh] lg:min-h-[85vh] flex flex-col justify-center py-10 md:py-14 lg:py-16">
       {/* Top micro-bar / Editorial index */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="flex items-center justify-between pb-6 mb-10 border-b border-zinc-200/70 dark:border-zinc-800/70 text-[11px] font-mono text-zinc-400 dark:text-zinc-500 uppercase tracking-widest"
+        className="flex items-center justify-between pb-4 mb-8 border-b border-zinc-200/70 dark:border-zinc-800/70 text-[10px] md:text-[11px] font-mono text-zinc-400 dark:text-zinc-500 uppercase tracking-widest"
       >
         <span className="flex items-center gap-2">
           <span className="text-zinc-900 dark:text-zinc-100 font-bold">[ 00 ]</span>
@@ -20,40 +20,43 @@ export const Hero: React.FC = () => {
         <span className="hidden sm:inline">CEBU, PHILIPPINES &middot; 2026</span>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center lg:items-start">
         {/* Main Editorial Text Column */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="lg:col-span-7 xl:col-span-7 flex flex-col space-y-8"
+          className="lg:col-span-7 xl:col-span-7 flex flex-col space-y-6"
         >
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <div className="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
               COMPUTER SCIENCE STUDENT &middot; DEVELOPER
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.05]">
+            <h1 
+              className="font-bold tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.08]"
+              style={{ fontSize: 'clamp(2.1rem, 4.2vw, 3.6rem)' }}
+            >
               Janelie Sayson Blanco
             </h1>
           </div>
 
-          <div className="text-[15px] md:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed space-y-4 pt-2">
+          <div className="text-[14px] md:text-[15px] text-zinc-600 dark:text-zinc-400 max-w-xl leading-relaxed space-y-3.5 pt-1">
             <p>I'm a Computer Science student and aspiring Full-Stack & AI Engineer. I build web apps and AI-powered tools, and lately I'm diving into how to make them feel fast, smooth, and fun to use. </p>
             <p>Every project I make teaches me something new. I love turning ideas into working products, and I want to grow alongside engineers who care about building things well.</p>
           </div>
 
           {/* Quick jump navigation actions */}
-          <div className="pt-4 flex flex-wrap items-center gap-4 text-xs font-mono uppercase tracking-wider">
+          <div className="pt-2 flex flex-wrap items-center gap-3.5 text-xs font-mono uppercase tracking-wider">
             <a 
               href="#projects" 
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors"
             >
               <span>EXPLORE WORK</span>
               <ArrowDown size={13} />
             </a>
             <a 
               href="#contact" 
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
             >
               <span>GET IN TOUCH</span>
               <ArrowUpRight size={13} />
@@ -66,7 +69,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="lg:col-span-5 xl:col-span-5 self-center lg:self-start w-full max-w-sm lg:max-w-[430px] mx-auto lg:mx-0"
+          className="lg:col-span-5 xl:col-span-5 self-center lg:self-start w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[360px] mx-auto lg:mx-0"
         >
           <div className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0a0a0a] p-2 relative frame-corner">
             <div className="aspect-[4/5] bg-zinc-100 dark:bg-black relative overflow-hidden flex items-end justify-center">
